@@ -1,0 +1,6 @@
+- Estartar a venv do projeto: source .venv/bin/activate  
+- Rodar o app: uvicorn app.main:app --reload
+- Instalar as dependências do projeto depois de clonar:
+    - python3 -m venv .venv (Se não tiver venv criada)
+    - source .venv/bin/activate
+    - pip install -r requirements.txt
