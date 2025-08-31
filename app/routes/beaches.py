@@ -1,6 +1,7 @@
 from fastapi import APIRouter
 from app.models.beach import Beach
-from app.database.fake_database import beaches
+from app.database.fake_database import beaches, fake_descriptions
+import random
 
 router = APIRouter()
 
@@ -16,7 +17,17 @@ def create_beach(beach: Beach):
         "id": len(beaches), # id simples baseado no tamanho da lista
         "name": beach.name,
         "state": beach.state,
+        "description": random.choice(fake_descriptions),
         "image": "/static/images/default.png"  # imagem padrão
     }
     beaches.append(new_beach)
     return new_beach
+
+
+@router.delete("/beaches/{beach_id}")
+def delete_beach(beach_id: int):
+    for i, b in enumerate(beaches):
+        if b["id"] == beach_id:
+            deleted = beaches.pop(i)
+            return {"message": "Beach deleted successfully", "beach": deleted}
+    raise HTTPException(status_code=404, detail="Beach not found")
